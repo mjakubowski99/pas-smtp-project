@@ -1,0 +1,52 @@
+Poprawna komunikacja:
+
+    Server: hello supported_protocols usmtp supported_versions 1.0\r\n 
+    Client: usmtp1.0 hello\r\n 
+    Server: 200 ok go auth\r\n
+    Client: login some_login\r\n 
+            password some_password\r\n 
+
+    Server: 200 ok go send\r\n
+    Client: mail from: example@example.com\r\n 
+    Server: 200 ok go recipients\r\n
+    Client: mail to: recipient1@example.com recipient2@example.com\r\n
+    Server: 200 ok go subject\r\n 
+    Client: subject: some_content\r\n\r\n 
+    Server: 200 ok go message\r\n 
+    Client: message: some_message\r\n\r\n
+    Server: 200 ok go attachments if you want\r\n
+    Client: attachments-count: number_of_attachments\r\n
+
+    Number_of_attachments count:
+
+    Client: Content-Type: type_of_content\r\n 
+    Server: 200 ok go content-size\r\n 
+    Client: Content-Size: size_of_file_in_bytes\r\n
+    Server: 200 ok go content
+    Client: base64encode(file_content) + '\r\n\r\n'
+    
+
+
+
+Błędy na etapach:
+
+Złe dane od klient np:
+
+Server: hello supported_protocols usmtp supported_versions 1.0
+Client: usmtp2.0 hello
+Server: 401 bad protocol version
+
+Server: hello supported_protocols usmtp supported_versions 1.0
+Client: smtp2.0 hello
+Server: 402 bad protocol 
+
+Server: hello supported_protocols usmtp supported_versions 1.0
+Client: x
+Server: 400 bad request
+
+
+
+
+
+
+

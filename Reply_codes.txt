@@ -1,0 +1,47 @@
+List of protocol server return codes:
+- 1xy - Informations 
+- 2xy - Positive reply
+- 3xy - Syntax errors
+- 4xy - Errors, client can send data again
+- 5xy - Errors, connection is shutting down
+
+--------------------------------------------
+
+Informations return codes (1xy):
+- 100 - Start's informations
+- 110 - Hello
+- 120 - Additional help informations
+- 130 - Bye
+
+--------------------------------------------
+
+Positive reply return codes (2xy):
+- 200 - Request OK
+- 201 - Login successful
+- 202 - Email was sent
+
+--------------------------------------------
+
+Syntax errors return codes (3xy): (nie jestem pewny czy tego nie usunąć)
+- 300 - Bad request syntax
+- 301 - Command not implemented
+
+--------------------------------------------
+
+Errors, client can send data again return codes (4xy):
+- 401 - Wrong password or login
+- 402 - Email of user bad syntax
+- 403 - Recipient email bad syntax
+- 404 - Selected attachment does not exist
+- 405 - Too much weight of the attachment
+- 406 - Too many recipients
+
+--------------------------------------------
+
+Errors, connection is shutting down return codes (5xy):
+- 500 - Cannot connect to server
+- 501 - Multiple wrong login or password
+- 502 - Cannot Base64 of client's data
+- 503 - Unsupported version of protocol
+- 504 - Unexpected error
+--------------------------------------------

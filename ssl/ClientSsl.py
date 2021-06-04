@@ -14,13 +14,13 @@ class ClientSsl:
 
     def waitForData(self):
         data = b''
-        while b'\r\n' not in data:
+        while b'\r\n\r\n' not in data:
             data += self.sock.recv(1) 
         return data 
 
     def verifyCert(self):
         data = self.waitForData()
-        if CertificateVerification.verifyCertificate( data[:-2], self.rootCert ):
+        if CertificateVerification.verifyCertificate( data[:-4], self.rootCert ):
             self.certData = data[:-2]
             print("Trusted cert")
             return True

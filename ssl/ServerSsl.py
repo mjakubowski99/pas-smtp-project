@@ -21,6 +21,7 @@ class ServerSsl:
 
     def sslCommunication(self, client):
         cert = open("ssl/certs/serverCert.pem", "rb")
+
         client.sendall( cert.read() + b'\r\n' )
         data = self.waitForData(client, b'\r\n\r\n')
     
@@ -33,10 +34,11 @@ class ServerSsl:
             message = RsaEncryption.decrypt( private_key, data[:-4] )
             if( self.validCode(message) ):
                 message = message.split(b'\r\n')
+                #print(message)
                 self.clientKey = message[0]
                 self.clientVector = message[1]
 
-                client.sendall(b'200 symetric key decryption done\r\n')
+                client.sendall(b'200 symetric key decryption done\r\n\r\n')
                 return (self.clientKey, self.clientVector)
             else:
                 client.sendall(b'400 response code not valid\r\n')

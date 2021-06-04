@@ -6,12 +6,18 @@ from cryptography.x509.base import Certificate
 from cryptography.exceptions import InvalidSignature
 
 def verifyCertificate(certificate, rootCertData):
-    #try:
-    cert = x509.load_pem_x509_certificate(certificate)
-    rootCert = x509.load_pem_x509_certificate(rootCertData)
-    #except Exception:
-    #    return False 
-        
+    try:
+        rootCert = x509.load_pem_x509_certificate(rootCertData)
+    except Exception:
+        print("RootCert Exception")
+        return False 
+
+    try:
+        cert = x509.load_pem_x509_certificate(certificate)
+    except Exception:
+        print("Cert Exception")
+        return False
+
     key = rootCert.public_key()
 
     try:

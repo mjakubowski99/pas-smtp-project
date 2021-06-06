@@ -1,27 +1,36 @@
+
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
 #from cryptography import x509
 #from cryptography.hazmat.primitives import serialization
 
 def encrypt(key, message):
-    return key.encrypt(
-        message,
-        padding.OAEP(
-            mgf=padding.MGF1(algorithm=hashes.SHA256()),
-            algorithm=hashes.SHA256(),
-            label=None
+    try: 
+        encryptedData = key.encrypt(
+            message,
+            padding.OAEP(
+                mgf=padding.MGF1(algorithm=hashes.SHA256()),
+                algorithm=hashes.SHA256(),
+                label=None
+            )
         )
-    )
+        return encryptedData
+    except ValueError:
+        return False
 
 def decrypt(key, message):
-    return key.decrypt(
-        message,
-        padding.OAEP(
-            mgf=padding.MGF1(algorithm=hashes.SHA256()),
-            algorithm=hashes.SHA256(),
-            label=None
-        ),
-    )
+    try:
+        decryptedData = key.decrypt(
+            message,
+            padding.OAEP(
+                mgf=padding.MGF1(algorithm=hashes.SHA256()),
+                algorithm=hashes.SHA256(),
+                label=None
+            ),
+        )
+        return decryptedData
+    except ValueError:
+        return False 
 
 #certificate = open("ssl/certs/cert.pem", "rb")
 

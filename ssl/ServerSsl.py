@@ -22,29 +22,44 @@ class ServerSsl:
     def sslCommunication(self, client):
         cert = open("ssl/certs/serverCert.pem", "rb")
 
-        client.sendall( cert.read() + b'\r\n' )
-        data = self.waitForData(client, b'\r\n\r\n')
+        client.sendall( cert.read() + b'.\r\n\r\n' ) #server send cert
+        data = self.waitForData(client, b'\r\n\r\n') #server wait for encrypted symmetric key and vector
     
         privateKeyFile = open("ssl/certs/key.pem", "rb")
         private_key = serialization.load_pem_private_key(
             privateKeyFile.read(),
             password=b"pass123"
         )
+
         try:
-            message = RsaEncryption.decrypt( private_key, data[:-4] )
-            if( self.validCode(message) ):
+            message = RsaEncryption.decrypt( private_key, data[:-4] ) #server use private key to decrypt message
+            
+            if( message == False ):
+                client.sendall(b'400 failed to decrypt bad encrypted data\r\n\r\n')
+                return False 
+
+            elif( self.validCode(message) ):
                 message = message.split(b'\r\n')
-                #print(message)
-                self.clientKey = message[0]
+
+                if len(message) < 2 :
+                    raise ValueError()
+
+                self.clientKey = message[0][4:]
                 self.clientVector = message[1]
 
+                if ( len(self.clientKey) not in [16, 24, 32] 
+                     #or len(self.clientVector) not in [16, 24, 32] 
+                ):
+                    client.sendall(b'400 bad key length\r\n\r\n')
+                    return False 
+
                 client.sendall(b'200 symetric key decryption done\r\n\r\n')
-                return (self.clientKey, self.clientVector)
+                return True
             else:
-                client.sendall(b'400 response code not valid\r\n')
-        except Exception:
-            client.sendall(b'400 symetric key decryption error\r\n') 
-        return ()
+                client.sendall(b'400 response code not valid\r\n\r\n')
+        except ValueError:
+            client.sendall(b"400 symetric key decryption error\r\n\r\n") 
+        return False
 
 
 

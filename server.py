@@ -6,14 +6,10 @@ import re
 
 regex = '^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$'
 
-def getClientKey(message):
-    key = message[0]
-    return key[4:]
-
 def getResponse(client):
     response = b""
     while not b"\r\n\r\n" in response:
-        response += client.recv(1024)
+        response += client.recv(1)
     return response[:-4]
 
 def encryptData(encryptor, message):
@@ -44,60 +40,64 @@ while True:
     client, addr = s.accept()
     print("Connected: ", addr[0])
 
-    server = ServerSsl.ServerSsl()
-    message = server.sslCommunication(client) #key and vector to decryption and encryption
+    try:
+        server = ServerSsl.ServerSsl()
+        if server.sslCommunication(client): #key and vector to decryption and encryption
+            message = (server.clientKey, server.clientVector)
 
-    cipher = Encryption.SymetricEncrypt(getClientKey(message), "")
+            cipher = Encryption.SymetricEncrypt(message[0], "")
 
-    client.sendall(encryptData(cipher, "100 Hello supported_protocols usmtp supported_versions 1.0"))
+            client.sendall(encryptData(cipher, "100 Hello supported_protocols usmtp supported_versions 1.0"))
 
-    response = getResponse(client)
-    response = decryptData(cipher, response)
-    print(response)
-
-    if not "1.0" in response:
-        client.sendall(encryptData(cipher, "503 Unsupported version of protocol"))
-        client.close()
-
-    #Authentication system
-    authentication = False
-    counter = 0
-    while not authentication:
-        counter += 1
-        if(counter == 5):
-            client.sendall(encryptData(cipher, "501 Multiple wrong login or password. Try again later."))
-            client.close()
-            break
-        client.sendall(encryptData(cipher, "111 Send your e-mail adress"))
-
-        response = getResponse(client)
-        response = decryptData(cipher, response)
-        email = response
-        print(checkEmail(email))
-        while not checkEmail(email):
-            print("petla")
-            client.sendall(encryptData(cipher, "301 Wrong e-mail syntax"))
             response = getResponse(client)
             response = decryptData(cipher, response)
-            email = response
 
-        client.sendall(encryptData(cipher, "112 Send your password"))
+            if not "1.0" in response:
+                client.sendall(encryptData(cipher, "503 Unsupported version of protocol"))
+                client.close()
 
-        response = getResponse(client)
-        response = decryptData(cipher, response)
-        password = response
+            #Authentication system
+            authentication = False
+            counter = 0
+            while not authentication:
+                counter += 1
+                if(counter == 5):
+                    client.sendall(encryptData(cipher, "501 Multiple wrong login or password. Try again later."))
+                    client.close()
+                    break
+                client.sendall(encryptData(cipher, "111 Send your e-mail adress"))
 
-        authentication = authClient(email, password)
-        if not authentication:
-            client.sendall(encryptData(cipher, "401 Wrong password"))
+                response = getResponse(client)
+                response = decryptData(cipher, response)
+                email = response
+                print(checkEmail(email))
+                while not checkEmail(email):
+                    print("petla")
+                    client.sendall(encryptData(cipher, "301 Wrong e-mail syntax"))
+                    response = getResponse(client)
+                    response = decryptData(cipher, response)
+                    email = response
+
+                client.sendall(encryptData(cipher, "112 Send your password"))
+
+                response = getResponse(client)
+                response = decryptData(cipher, response)
+                password = response
+
+                authentication = authClient(email, password)
+                if not authentication:
+                    client.sendall(encryptData(cipher, "401 Wrong password"))
+                else:
+                    break
+
+            if authentication:
+                client.sendall(encryptData(cipher, "200 Authentication successful"))
+                print("Authentication successful")
         else:
-            break
-
-    if authentication:
-        client.sendall(encryptData(cipher, "200 Authentication successful"))
-        print("Authentication successful")
-
-
+            print("Bad ssl")
+            client.close()
+    except socket.error:
+        client.close()
 
     client.close()
 

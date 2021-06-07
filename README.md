@@ -16,7 +16,7 @@ db_username = root
 db_password = 
 ```
 
-Next run:  
+Next run in project root folder:  
 ```
 py database/InitDB.py
 ```

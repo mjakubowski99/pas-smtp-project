@@ -29,7 +29,6 @@ class ClientSsl:
         data = self.waitForCert()
         if CertificateVerification.verifyCertificate( data[:-5], self.rootCert ):
             self.certData = data[:-5]
-            print(self.certData)
             print("Trusted cert")
             return True
         else:

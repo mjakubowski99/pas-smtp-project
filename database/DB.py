@@ -13,9 +13,9 @@ class DB:
             database="usmtp",
             port=3306
         )
-    def exec(self, query, values=(), multiple=False):
+    def exec(self, query, values=()):
         executor = self.db.cursor() 
-        executor.execute(query, values, multi=multiple)
+        executor.execute(query, values)
         self.result = executor
 
     def execMultiple(self, query):

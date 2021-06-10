@@ -23,6 +23,13 @@ def getResponse(s):
 
     return response[:-4]
 
+def sendMail(s, cipher, email):
+    s.sendall( encryptData(cipher, "mail from: {}".format(email) ) )
+    response = decryptData( cipher, getResponse(s) )
+    print(response)
+
+
+
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 try:
@@ -77,6 +84,7 @@ try:
             print(response)
             if "200" in response:
                 authentication = True
+                sendMail(s, cipher, email)
             elif "501" in response:
                 sys.exit(0)
 

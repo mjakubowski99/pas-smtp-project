@@ -3,8 +3,17 @@ import socket
 import ssl.ServerSsl as ServerSsl
 import ssl.encryption.SymetricEncryption as Encryption
 import re
+from database.DB import DB
 
 regex = '^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$'
+
+db = DB()
+
+def mailInDatabase(mail):
+    db.exec("SELECT email FROM users WHERE email=%s", (mail,) )
+    for x in db.result:
+        return True
+    return False 
 
 def getResponse(client):
     response = b""
@@ -31,6 +40,39 @@ def authClient(email, password):
     if email == "jan.kowalski@wp.pl" and password == "supersilnehaslo":
         return True
     return False
+
+def validHeader(response, header):
+    return response.startswith(header)
+
+def receiveMail(client, cipher):
+    response = decryptData(cipher, getResponse(client) )
+
+    if( not validHeader(response, "mail from: ") ):
+        client.sendall( encryptData(cipher, "400 bad sender header") )
+        client.close()
+        return False 
+
+    sender = response[11:]
+    print(sender)
+    if not checkEmail(sender):
+        client.sendall( encryptData(cipher, "400 bad mail pattern") )
+        client.close()
+        return False 
+
+    if not mailInDatabase(sender):
+        client.sendall( encryptData(cipher, "400 bad mail") )
+        client.close()
+        return False 
+
+    client.sendall( encryptData(cipher, "200 ok go recipients") )
+    return True
+
+    
+    
+    
+
+
+
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind(('127.0.0.1', 1338))
@@ -93,6 +135,8 @@ while True:
             if authentication:
                 client.sendall(encryptData(cipher, "200 Authentication successful"))
                 print("Authentication successful")
+
+                receiveMail(client, cipher)
         else:
             print("Bad ssl")
             client.close()

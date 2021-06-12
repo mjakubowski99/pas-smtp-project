@@ -4,6 +4,7 @@ import ssl.ServerSsl as ServerSsl
 import ssl.encryption.SymetricEncryption as Encryption
 import re
 from database.DB import DB
+import authentication.ServerAuthentication as ServerAuthentication
 
 regex = '^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$'
 
@@ -14,6 +15,7 @@ def mailInDatabase(mail):
     for x in db.result:
         return True
     return False 
+
 
 def getResponse(client):
     response = b""
@@ -30,11 +32,13 @@ def decryptData(decryptor, message):
     decryptedData = decryptor.decrypt(message)
     return decryptedData
 
+
 def checkEmail(email):
     if(re.search(regex, email)):
         return True
     else:
         return False
+
 
 def authClient(email, password):
     if email == "jan.kowalski@wp.pl" and password == "supersilnehaslo":
@@ -80,7 +84,7 @@ s.listen(5)
 
 while True:
     client, addr = s.accept()
-    print("Connected: ", addr[0])
+    print("Connected: ", addr[0]) # Wpis do logów
 
     try:
         server = ServerSsl.ServerSsl()
@@ -99,50 +103,19 @@ while True:
                 client.close()
 
             #Authentication system
-            authentication = False
-            counter = 0
-            while not authentication:
-                counter += 1
-                if(counter == 5):
-                    client.sendall(encryptData(cipher, "501 Multiple wrong login or password. Try again later."))
-                    client.close()
-                    break
-                client.sendall(encryptData(cipher, "111 Send your e-mail adress"))
-
-                response = getResponse(client)
-                response = decryptData(cipher, response)
-                email = response
-                print(checkEmail(email))
-                while not checkEmail(email):
-                    print("petla")
-                    client.sendall(encryptData(cipher, "301 Wrong e-mail syntax"))
-                    response = getResponse(client)
-                    response = decryptData(cipher, response)
-                    email = response
-
-                client.sendall(encryptData(cipher, "112 Send your password"))
-
-                response = getResponse(client)
-                response = decryptData(cipher, response)
-                password = response
-
-                authentication = authClient(email, password)
-                if not authentication:
-                    client.sendall(encryptData(cipher, "401 Wrong password"))
-                else:
-                    break
-
-            if authentication:
-                client.sendall(encryptData(cipher, "200 Authentication successful"))
-                print("Authentication successful")
-
-                receiveMail(client, cipher)
+            authenticationServer = ServerAuthentication.ServerAuthentication(client, cipher)
+            authentication = authenticationServer.communication()
+            if not authentication:
+                print("Connection close: ", addr[0]) # Wpis do logów
+                client.close()
         else:
-            print("Bad ssl")
+            print("Bad ssl") # Wpis do logów
+            print("Connection close: ", addr[0]) # Wpis do logów
             client.close()
     except socket.error:
         client.close()
 
     client.close()
+    print("Connection close: ", addr[0]) # Wpis do logów
 
 

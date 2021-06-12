@@ -68,6 +68,10 @@ try:
             response = getResponse(s)
             response = decryptData(cipher, response)
             print(response)
+            if "501" in response:
+                s.close()
+                sys.exit(0)
+            
 
             while "301" in response:
                 email = input("Wprowadź swój adres e-mail:\n")
@@ -75,6 +79,9 @@ try:
                 response = getResponse(s)
                 response = decryptData(cipher, response)
                 print(response)
+                if "501" in response:
+                    s.close()
+                    sys.exit(0)
 
             password = input("Wprowadź swoje hasło\n")
 

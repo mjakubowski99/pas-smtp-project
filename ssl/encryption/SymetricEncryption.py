@@ -17,7 +17,9 @@ class SymetricEncrypt:
         return message
 
     def formatMessage(self, message):
+        self.howManyAdd = 0
         length = len(message)
+        
         if( length < 16):
             self.howManyAdd = 16 - length
         elif( length % 16 != 0 ):
@@ -36,6 +38,7 @@ class SymetricEncrypt:
         return self.addSpacesToMessage(message, self.howManyAdd)
     
     def encrypt(self, message):
+        self.formatMessage(message)
         encryptor = self.cipher.encryptor()
         return encryptor.update( self.formatMessage(message).encode('utf-8') ) + encryptor.finalize()
 

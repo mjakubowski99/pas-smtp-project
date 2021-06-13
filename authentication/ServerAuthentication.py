@@ -39,7 +39,7 @@ class ServerAuthentication:
 
     def authentication(self, email, password):
         self.db.exec("SELECT email, password FROM users WHERE email = %s AND password = %s", (email, password,) )
-        for x in self.db.result:
+        for x in self.db.result:    
             return True
         return False
 

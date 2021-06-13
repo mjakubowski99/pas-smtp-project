@@ -23,6 +23,7 @@ class DB:
         executor.execute(query, values)
         self.result = executor
         self.db.commit()
+        return executor.lastrowid
 
     def execMultiple(self, query):
         executor = self.db.cursor() 

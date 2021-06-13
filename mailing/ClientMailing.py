@@ -1,3 +1,4 @@
+import os.path
 
 class ClientMailing:
     def __init__(self, s, cipher, sender):
@@ -10,8 +11,14 @@ class ClientMailing:
         while not b"\r\n\r\n" in response:
             response += self.s.recv(1)
         return self.decryptData(response[:-4])
+    
+    def test(self, message):
+        encryptedData = self.cipher.encrypt(message)
+        #encryptedData += b"\r\n\r\n"
+        return encryptedData       
 
     def encryptData(self, message):
+        #message += "\r\n\r\n"
         encryptedData = self.cipher.encrypt(message)
         encryptedData += b"\r\n\r\n"
         return encryptedData
@@ -34,11 +41,12 @@ class ClientMailing:
     def sendRecipient(self):
         response = self.getResponse()
         print(response[4:])
-        #TODO dodatkowa walidacja
-        email = input()
-        self.s.sendall( self.encryptData(self.prepareMessage(email, "mail to: ") ) )
-        response = self.getResponse()
-        print(response[4:])       
+        while not response.startswith("200"):
+            email = input()
+            self.s.sendall( self.encryptData(self.prepareMessage(email, "mail to: ") ) )
+            response = self.getResponse()
+            print(response[4:])       
+
 
     def sendSubject(self):
         response = self.getResponse()
@@ -64,6 +72,11 @@ class ClientMailing:
                 break
         return data[:-6]
 
+    def encryptFile(self, data):
+        encryptedData = self.cipher.encryptFile(data)
+        encryptedData += b"\r\n\r\n"
+        return encryptedData
+
     def sendAttachments(self):
         response = self.getResponse()
         print(response[4:])
@@ -72,14 +85,34 @@ class ClientMailing:
         response = self.getResponse()
         print(response[4:])
 
+        for i in range(0, int(number)):
+            response = self.getResponse()
+            print(response[4:])
+            while True:
+                filename = input("Input filename:\n")
+                if os.path.isfile(filename):
+                    break
+                else:
+                    print("File " + filename + " not found.\n")
+
+            file = open(filename, "rb")
+            data = file.read()
+            print(data)
+            data = self.encryptFile(data)
+            message = "Content-Length: "+ str(len(data)) + "\r\n" + "Filename: " + filename
+            self.s.sendall( self.encryptData(message) )
+            response = self.getResponse()
+            print(response[4:])
+            self.s.sendall( data )
+
+
 
     def communication(self):
         self.sendSender(self.sender)
         self.sendRecipient()
         self.sendSubject()
         self.sendData()
-        
-        #self.sendAttachments()
+        self.sendAttachments()
 
 
 

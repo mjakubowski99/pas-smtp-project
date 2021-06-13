@@ -109,7 +109,10 @@ class ServerMailing:
             filename = self.getAttachmentName(response)
             self.client.sendall(self.encryptData("200 OK"))
             response = self.getFile(size)
-            path = "Attachments/" + recipient
+            path = "attachments/" + recipient
+            if not os.path.exists("attachments"):
+                os.mkdir("attachments")
+
             if not os.path.exists(path):
                 os.mkdir(path)
             

@@ -109,19 +109,29 @@ def server(client):
     
     
     
+def listen(s):
+    while True:
+        client, addr = s.accept()
+        print("Connected: ", addr[0]) # Wpis do logów
+
+        task = threading.Thread(target=server, kwargs={'client': client} )
+        task.start()
+    
 
 
+s6 = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
+s6.bind(('::1', 1337))
+s6.listen(5)
 
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind(('127.0.0.1', 1338))
 s.listen(5)
 
-while True:
-    client, addr = s.accept()
-    print("Connected: ", addr[0]) # Wpis do logów
+task = threading.Thread(target=listen, kwargs={'s': s6} )
+task.start()
 
-    task = threading.Thread(target=server, kwargs={'client': client} )
-    task.start()
+task = threading.Thread(target=listen, kwargs={'s': s} )
+task.start()
 
 

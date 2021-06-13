@@ -34,8 +34,7 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 try:
     s.connect( ('127.0.0.1', 1338) )
-
-    client = ClientSsl.ClientSsl(s, open("ssl/certs/cert.pem", "rb") )
+    client = ClientSsl.ClientSsl(s, open("ssl/clientKeys/rootPublicKey.pem", "rb") )
     if not client.sslCommunication():
         print("Ssl communication failed")
         s.close()

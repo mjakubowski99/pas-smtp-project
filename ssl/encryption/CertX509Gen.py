@@ -6,41 +6,54 @@ from cryptography.x509.oid import NameOID
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives import serialization
 
-RsaPrivateKeyGen.createRsaKeyFile()
+def main():
+    RsaPrivateKeyGen.createRsaKeyFile()
 
-commonName = input("Please provide your common name: ")
+    publicKeyFilename = input("Please provide filename for public key: ")
 
-subject = x509.Name([
-    x509.NameAttribute(NameOID.COUNTRY_NAME, u"PL"),
-    x509.NameAttribute(NameOID.STATE_OR_PROVINCE_NAME, u"Lubelskie"),
-    x509.NameAttribute(NameOID.LOCALITY_NAME, u"Lublin"),
-    x509.NameAttribute(NameOID.ORGANIZATION_NAME, u"UMCS"),
-    x509.NameAttribute(NameOID.COMMON_NAME, commonName )
-])
+    publicKeyFile = open("ssl/clientKeys/"+publicKeyFilename, "xb")
+    publicKey = RsaPrivateKeyGen.rsaObject.public_key()
 
-issuer = subject
+    publicKeyFile.write(
+        publicKey.public_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PublicFormat.SubjectPublicKeyInfo
+        )
+    )
 
-cert = x509.CertificateBuilder().subject_name(
-    subject
-).issuer_name(
-    issuer
-).public_key(
-    RsaPrivateKeyGen.rsaObject.public_key()
-).serial_number(
-    x509.random_serial_number()
-).not_valid_before(
-    datetime.datetime.utcnow()
-).not_valid_after( 
-    datetime.datetime.utcnow() + datetime.timedelta(days=300)
-).add_extension(
-    x509.SubjectAlternativeName([x509.DNSName(u"localhost")]),
-    critical=False,
-).sign(RsaPrivateKeyGen.rsaObject, hashes.SHA256())
+    commonName = input("Please provide your common name: ")
 
-certName = input("Please provide certificate filename: ")
-certFile = open("certs/"+certName, "wb")
+    subject = x509.Name([
+        x509.NameAttribute(NameOID.COUNTRY_NAME, u"PL"),
+        x509.NameAttribute(NameOID.STATE_OR_PROVINCE_NAME, u"Lubelskie"),
+        x509.NameAttribute(NameOID.LOCALITY_NAME, u"Lublin"),
+        x509.NameAttribute(NameOID.ORGANIZATION_NAME, u"UMCS"),
+        x509.NameAttribute(NameOID.COMMON_NAME, commonName )
+    ])
 
-certFile.write(cert.public_bytes(serialization.Encoding.PEM))
+    issuer = subject
+
+    cert = x509.CertificateBuilder().subject_name(
+        subject
+    ).issuer_name(
+        issuer
+    ).public_key(
+        RsaPrivateKeyGen.rsaObject.public_key()
+    ).serial_number(
+        x509.random_serial_number()
+    ).not_valid_before(
+        datetime.datetime.utcnow()
+    ).not_valid_after( 
+        datetime.datetime.utcnow() + datetime.timedelta(days=300)
+    ).add_extension(
+        x509.SubjectAlternativeName([x509.DNSName(u"localhost")]),
+        critical=False,
+    ).sign(RsaPrivateKeyGen.rsaObject, hashes.SHA256())
+
+    certName = input("Please provide certificate filename: ")
+    certFile = open("ssl/rootCert/"+certName, "xb")
+
+    certFile.write(cert.public_bytes(serialization.Encoding.PEM))
 
 
 

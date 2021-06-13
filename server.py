@@ -1,4 +1,4 @@
-from os import system
+
 import socket
 import ssl.ServerSsl as ServerSsl
 import ssl.encryption.SymetricEncryption as Encryption

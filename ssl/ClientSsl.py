@@ -6,11 +6,12 @@ from cryptography import x509
 import ssl.encryption.CertificateVerification as CertificateVerification
 import ssl.encryption.SymetricEncryption as Encryption
 import ssl.encryption.RsaEncryption as RsaEncryption
+from cryptography.hazmat.primitives import serialization
 
 class ClientSsl:
-    def __init__(self, sock, rootCert):
+    def __init__(self, sock, caPublicKey):
         self.sock = sock
-        self.rootCert = rootCert.read()
+        self.caPublicKey = caPublicKey.read()
         self.certData = None 
 
     def waitForCert(self):
@@ -27,7 +28,8 @@ class ClientSsl:
 
     def verifyCert(self):
         data = self.waitForCert()
-        if CertificateVerification.verifyCertificate( data[:-5], self.rootCert ):
+        
+        if CertificateVerification.verifyCertificate( data[:-5], self.caPublicKey ):
             self.certData = data[:-5]
             print("Trusted cert")
             return True
@@ -37,7 +39,8 @@ class ClientSsl:
             return False
 
     def getPublicKey(self):
-        return x509.load_pem_x509_certificate(self.certData).public_key()
+        cert = x509.load_pem_x509_certificate(self.certData)
+        return cert.public_key()
 
     def genSymetricKey(self):
         self.key = os.urandom(32)

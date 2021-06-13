@@ -20,15 +20,16 @@ class ServerSsl:
             return False 
 
     def sslCommunication(self, client):
-        cert = open("ssl/certs/serverCert.pem", "rb")
+        cert = open("ssl/certs/cert1.pem", "rb")
 
         client.sendall( cert.read() + b'.\r\n\r\n' ) #server send cert
         data = self.waitForData(client, b'\r\n\r\n') #server wait for encrypted symmetric key and vector
     
-        privateKeyFile = open("ssl/certs/key.pem", "rb")
+        privateKeyFile = open("ssl/keys/skey.pem", "rb")
+        
         private_key = serialization.load_pem_private_key(
             privateKeyFile.read(),
-            password=b"pass123"
+            password=b"123"
         )
 
         try:

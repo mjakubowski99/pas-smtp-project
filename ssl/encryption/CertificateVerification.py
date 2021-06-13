@@ -5,9 +5,15 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.x509.base import Certificate
 from cryptography.exceptions import InvalidSignature
 
-def verifyCertificate(certificate, rootCertData):
+def getPublicKey(file):
+    return serialization.load_pem_public_key(
+        file
+    )
+
+def verifyCertificate(certificate, caPublicKeyFile):
+    caPublicKey = getPublicKey(caPublicKeyFile)
     try:
-        rootCert = x509.load_pem_x509_certificate(rootCertData)
+        pass
     except Exception:
         print("RootCert Exception")
         return False 
@@ -18,10 +24,8 @@ def verifyCertificate(certificate, rootCertData):
         print("Cert Exception")
         return False
 
-    key = rootCert.public_key()
-
     try:
-        key.verify(
+        caPublicKey.verify(
             cert.signature,
             cert.tbs_certificate_bytes,
             padding.PKCS1v15(),

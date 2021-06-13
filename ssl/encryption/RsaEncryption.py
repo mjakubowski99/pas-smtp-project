@@ -29,7 +29,8 @@ def decrypt(key, message):
             ),
         )
         return decryptedData
-    except ValueError:
+    except ValueError as er:
+        print( str(er) )
         return False 
 
 #certificate = open("ssl/certs/cert.pem", "rb")

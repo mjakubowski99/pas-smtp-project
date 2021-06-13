@@ -11,7 +11,7 @@ Poprawna komunikacja:
     Server: 200 ok go recipients\r\n
     Client: mail to: recipient1@example.com recipient2@example.com\r\n
     Server: 200 ok go subject\r\n 
-    Client: subject: some_content\r\n\r\n 
+    Client: subject: some_content\r\n\r\n... 
     Server: 200 ok go message\r\n 
     Client: message: some_message\r\n\r\n
     Server: 200 ok go attachments if you want\r\n
@@ -23,7 +23,7 @@ Poprawna komunikacja:
     Server: 200 ok go content-size\r\n 
     Client: Content-Size: size_of_file_in_bytes\r\n
     Server: 200 ok go content
-    Client: base64encode(file_content) + '\r\n\r\n'
+    Client: base64encode(file_content) + '\r\n\r\n...'
     
 
 

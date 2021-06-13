@@ -19,7 +19,7 @@ def createRsaKeyFile():
     keyFilename = input("Let's provide filename which will be rsa key filename: ")
     passphrase = input("Please provide passphrase used to encryption: ")
 
-    keyFile = open("certs/"+keyFilename, "wb")
+    keyFile = open("ssl/keys/"+keyFilename, "xb")
 
     filename = keyFilename
 

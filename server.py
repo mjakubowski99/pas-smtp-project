@@ -1,5 +1,5 @@
-
 import socket
+import threading
 import ssl.ServerSsl as ServerSsl
 import ssl.encryption.SymetricEncryption as Encryption
 import re
@@ -72,21 +72,7 @@ def receiveMail(client, cipher):
     client.sendall( encryptData(cipher, "200 ok go recipients") )
     return True
 
-    
-    
-    
-
-
-
-
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.bind(('127.0.0.1', 1338))
-s.listen(5)
-
-while True:
-    client, addr = s.accept()
-    print("Connected: ", addr[0]) # Wpis do logów
-
+def server(client):
     try:
         server = ServerSsl.ServerSsl()
         if server.sslCommunication(client): #key and vector to decryption and encryption
@@ -120,8 +106,22 @@ while True:
             client.close()
     except socket.error:
         client.close()
+    
+    
+    
 
-    client.close()
-    print("Connection close: ", addr[0]) # Wpis do logów
+
+
+
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.bind(('127.0.0.1', 1338))
+s.listen(5)
+
+while True:
+    client, addr = s.accept()
+    print("Connected: ", addr[0]) # Wpis do logów
+
+    task = threading.Thread(target=server, kwargs={'client': client} )
+    task.start()
 
 

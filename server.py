@@ -5,6 +5,7 @@ import ssl.encryption.SymetricEncryption as Encryption
 import re
 from database.DB import DB
 import authentication.ServerAuthentication as ServerAuthentication
+import mailing.ServerMailing as ServerMailing
 
 regex = '^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$'
 
@@ -108,6 +109,11 @@ while True:
             if not authentication:
                 print("Connection close: ", addr[0]) # Wpis do logów
                 client.close()
+
+            #Mailing system
+            mailingServer = ServerMailing.ServerMailing(client, cipher)
+            mailingServer = mailingServer.communication()
+            
         else:
             print("Bad ssl") # Wpis do logów
             print("Connection close: ", addr[0]) # Wpis do logów

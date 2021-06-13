@@ -18,6 +18,12 @@ class DB:
         executor.execute(query, values)
         self.result = executor
 
+    def insert(self, query, values=()):
+        executor = self.db.cursor() 
+        executor.execute(query, values)
+        self.result = executor
+        self.db.commit()
+
     def execMultiple(self, query):
         executor = self.db.cursor() 
         for x in executor.execute(query, multi=True):

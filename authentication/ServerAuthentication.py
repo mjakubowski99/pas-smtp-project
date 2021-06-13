@@ -84,15 +84,3 @@ class ServerAuthentication:
             self.client.sendall(self.encryptData("200 Authentication successful"))
             print("Authentication successful") #Wpis do logów
             return True
-
-
-
-    
-    
-
-
-
-
-
-
-

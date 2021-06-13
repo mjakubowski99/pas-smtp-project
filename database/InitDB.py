@@ -1,4 +1,4 @@
-import DB 
+import DB
 import mysql.connector
 import configparser
 

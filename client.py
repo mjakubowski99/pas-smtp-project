@@ -1,7 +1,9 @@
+#from server import receiveMail
 import socket
 import ssl.ClientSsl as ClientSsl 
 import ssl.encryption.SymetricEncryption as Encryption
 import sys
+import mailing.ClientMailing as ClientMailing
 
 
 def encryptData(encryptor, message):
@@ -23,10 +25,14 @@ def getResponse(s):
 
     return response[:-4]
 
-def sendMail(s, cipher, email):
-    s.sendall( encryptData(cipher, "mail from: {}".format(email) ) )
-    response = decryptData( cipher, getResponse(s) )
-    print(response)
+def prepareMessage(data, header):
+    header += data
+    return header 
+
+#def sendMail(s, cipher, data, header):
+#    s.sendall( encryptData(cipher, prepareMessage(data, header) ) )
+#    response = decryptData( cipher, getResponse(s) )
+#    print(response)
 
 
 
@@ -55,39 +61,67 @@ try:
         while not authentication:
             response = getResponse(s)
             response = decryptData(cipher, response)
-            print(response)
+            print(response[4:])
             if "501" in response:
                 s.close()
                 sys.exit(0)
 
-            email = input("Wprowadź swój adres e-mail:\n")
+            email = input()
 
             s.sendall(encryptData(cipher, email))
 
             response = getResponse(s)
             response = decryptData(cipher, response)
-            print(response)
+            print(response[4:])
+            if "501" in response:
+                s.close()
+                sys.exit(0)
+            
 
             while "301" in response:
-                email = input("Wprowadź swój adres e-mail:\n")
+                email = input()
                 s.sendall(encryptData(cipher, email))
                 response = getResponse(s)
                 response = decryptData(cipher, response)
-                print(response)
+                print(response[4:])
+                if "501" in response:
+                    s.close()
+                    sys.exit(0)
 
-            password = input("Wprowadź swoje hasło\n")
+            password = input()
 
             s.sendall(encryptData(cipher, password))
             response = getResponse(s)
             response = decryptData(cipher, response)
-            print(response)
+            print(response[4:])
             if "200" in response:
                 authentication = True
-                sendMail(s, cipher, email)
+                #sendMail(s, cipher, email, "mail from: ")
+                #sendMessage(email, "mail from: ")
             elif "501" in response:
                 sys.exit(0)
-
-        print("OK")
+        clientMailing = ClientMailing.ClientMailing(s, cipher, email)
+        clientMailing = clientMailing.communication()
         s.close()
 except socket.error:
     print("500 Cannot connect to server")
+    '''
+        recipient = input("Wprowadź adres e-mail odbiorcy:\n")
+        sendMail(s, cipher, recipient, "mail to: ")
+        #sendMessage(recipient, "mail to: ")
+
+        subject = input("Wprowadź temat wiadomości:\n")
+        sendMail(s, cipher, subject, "subject: ")
+        #sendMessage(subject, "subject: ")
+
+
+        print("Wprowadź dane:\nW celu zakończenia wprowadzania danych zostaw jedną linię pustą, a w kolejnej wpisz wyraz END\n")
+        data = ""
+        while True:#not '\rEND\n' in line:
+            data += input() + '\n'
+            if '\n\nEND' in data:
+                break
+        data = data[:-6]
+        sendMail(s, cipher, data, "data: ")
+        #sendMessage(recipient, "data: ")
+'''

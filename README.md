@@ -21,3 +21,14 @@ Next run in project root folder:
 py database/InitDB.py
 ```
 This will create database called usmtp 
+
+Last step is running:
+
+```
+py server.py
+```
+And
+```
+py client.py
+```
+To init server and client communication

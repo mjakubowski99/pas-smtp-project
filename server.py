@@ -76,9 +76,9 @@ def server(client):
     try:
         server = ServerSsl.ServerSsl()
         if server.sslCommunication(client): #key and vector to decryption and encryption
-            message = (server.clientKey, server.clientVector)
+            message = server.clientKey
 
-            cipher = Encryption.SymetricEncrypt(message[0], "")
+            cipher = Encryption.SymetricEncrypt(message)
 
             client.sendall(encryptData(cipher, "100 Hello supported_protocols usmtp supported_versions 1.0"))
 
@@ -93,7 +93,7 @@ def server(client):
             authenticationServer = ServerAuthentication.ServerAuthentication(client, cipher)
             authentication = authenticationServer.communication()
             if not authentication:
-                print("Connection close: ", addr[0]) # Wpis do logów
+                print("Connection close: ") # Wpis do logów
                 client.close()
 
             #Mailing system

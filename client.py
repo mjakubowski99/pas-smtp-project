@@ -45,7 +45,8 @@ try:
         print("Ssl communication failed")
         s.close()
     else:
-        cipher = Encryption.SymetricEncrypt(client.key, "")
+        print("Ssl communication ended with success")
+        cipher = Encryption.SymetricEncrypt(client.key)
 
         response = b""
         while not b"\r\n\r\n" in response:

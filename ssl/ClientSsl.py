@@ -26,11 +26,23 @@ class ClientSsl:
             data += self.sock.recv(1) 
         return data 
 
+    def algorithmsValid(self, data):
+        return data.decode('utf-8').startswith('202 algos valid')
+
     def verifyCert(self):
         data = self.waitForCert()
+
+        if( not self.algorithmsValid(data) ):
+            print("Server not support one of this algorithms: ")
+            print("Server message: ", data.decode('utf-8') )
+            return False
+
+        if( len(data) < 7 ):
+            print("It's sure that certificate is not valid")
+            return False 
         
-        if CertificateVerification.verifyCertificate( data[:-5], self.caPublicKey ):
-            self.certData = data[:-5]
+        if CertificateVerification.verifyCertificate( data[15:-5], self.caPublicKey ):
+            self.certData = data[15:-5]
             print("Trusted cert")
             return True
         else:
@@ -44,13 +56,17 @@ class ClientSsl:
 
     def genSymetricKey(self):
         self.key = os.urandom(32)
-        self.vector = os.urandom(16)
     
     def codeValid(self, data):
         return data.decode('utf-8').startswith('200 ')
 
     def getEncryptedSymetricKey(self):
-        toEncrypt = b"200 " + self.key + b'\r\n' + self.vector
+        toEncrypt = self.key
+
+        encryptedData = RsaEncryption.encrypt(
+                self.getPublicKey(),
+                toEncrypt
+            )
 
         try:
             encryptedData = RsaEncryption.encrypt(
@@ -62,10 +78,22 @@ class ClientSsl:
             return False 
 
     def sslCommunication(self):
+        self.sock.sendall(b'hello ssl1.0?\r\n\r\n')
+
+        data = self.waitForData()
+        if( data.decode('utf-8')[:-4] != "201 ssl valid"):
+            print("Server not support this ssl protocol version")
+            return False
+
+        print("Server support ssl 1.0")
+        self.sock.sendall(b'support asymetric-rsa-2048 symetric-aes-256-ecb?\r\n\r\n')
+
         if( not self.verifyCert() ): #receive and verify certificate
             return False
 
-        self.genSymetricKey() #gen symetric key and vector
+        print("Server support asymetric-rsa-2048 symetric-aes-256-ecb")
+
+        self.genSymetricKey() #gen symetric key
         key = self.getEncryptedSymetricKey() #encrypt keys with server public key
 
         if( key != False ): #if encryption successfull

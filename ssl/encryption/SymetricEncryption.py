@@ -6,7 +6,7 @@ from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 
 class SymetricEncrypt:
-    def __init__(self, key, vector):
+    def __init__(self, key):
         self.howManyAdd = 0 
         self.key = key
         self.cipher = Cipher( algorithms.AES(key), modes.ECB() )

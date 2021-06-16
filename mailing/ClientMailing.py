@@ -1,4 +1,5 @@
 import os.path
+import sys
 
 class ClientMailing:
     def __init__(self, s, cipher, sender):
@@ -34,6 +35,8 @@ class ClientMailing:
     def sendSender(self, email):
         response = self.getResponse()
         print(response[4:])
+        if response.startswith("520"):
+            sys.exit(0)
         self.s.sendall( self.encryptData(self.prepareMessage(email, "mail from: ") ) )
         response = self.getResponse()
         print(response[4:])
@@ -113,6 +116,9 @@ class ClientMailing:
         self.sendSubject()
         self.sendData()
         self.sendAttachments()
+        
+        response = self.getResponse()
+        print(response[4:])
 
 
 

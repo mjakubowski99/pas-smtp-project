@@ -42,7 +42,7 @@ class ServerSsl:
                 supported_asymetric=True
  
         if not supported_asymetric:
-            self.errorMessage = b'402 not supported asymetric algorithm'
+            self.errorMessage = b'502 not supported asymetric algorithm'
 
         supported_symetric = False
         for supp_algo in supported_algos_symetric:
@@ -50,7 +50,7 @@ class ServerSsl:
                 supported_symetric = True
 
         if not supported_symetric:
-            self.errorMessage = b'403 not supported symetric algorithm'
+            self.errorMessage = b'502 not supported symetric algorithm'
 
         return supported_symetric and supported_asymetric #check if both algorithms are valid
 
@@ -59,7 +59,7 @@ class ServerSsl:
         hello = self.waitForData(client, b'\r\n\r\n').decode('utf-8')
 
         if( hello[:-4] != 'hello ssl1.0?'  ):
-            client.sendall(b'400 not supported ssl version\r\n\r\n')
+            client.sendall(b'503 not supported ssl version\r\n\r\n')
             return False
         else:
             client.sendall(b'201 ssl valid\r\n\r\n')
@@ -87,7 +87,7 @@ class ServerSsl:
             message = RsaEncryption.decrypt( private_key, data[:-4] ) #server use private key to decrypt message
             
             if( message == False ):
-                client.sendall(b'501 symetric key decryption error\r\n\r\n')
+                client.sendall(b'504 symetric key decryption error\r\n\r\n')
                 return False 
 
             else:
@@ -96,13 +96,13 @@ class ServerSsl:
                 if ( len(self.clientKey) not in [16, 24, 32] 
                      #or len(self.clientVector) not in [16, 24, 32] 
                 ):
-                    client.sendall(b'502 bad client key length\r\n\r\n')
+                    client.sendall(b'505 bad client key length\r\n\r\n')
                     return False 
 
-                client.sendall(b'200 symetric key decryption done\r\n\r\n')
+                client.sendall(b'203 symetric key decryption done\r\n\r\n')
                 return True
         except ValueError:
-            client.sendall(b"501 symetric key decryption error\r\n\r\n") 
+            client.sendall(b"504 symetric key decryption error\r\n\r\n") 
         return False
 
 

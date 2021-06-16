@@ -39,13 +39,13 @@ class ServerMailing:
         return False 
 
     def getSender(self):
-        self.client.sendall(self.encryptData("xxx Send sender adress"))
+        self.client.sendall(self.encryptData("121 Send sender adress"))
         sender = self.getResponse()
         self.client.sendall(self.encryptData("200 OK"))
         return sender[11:]
 
     def getRecipient(self):
-        self.client.sendall(self.encryptData("xxx Send recipient adress"))
+        self.client.sendall(self.encryptData("122 Send recipient adress"))
         recipient = ""
         while True:
             recipient = self.getResponse()
@@ -53,26 +53,26 @@ class ServerMailing:
             if not self.checkEmail(recipient):
                 self.client.sendall(self.encryptData("301 Wrong e-mail syntax"))
             elif not self.mailInDatabase(recipient):
-                self.client.sendall(self.encryptData("xxx Recipient not found"))
+                self.client.sendall(self.encryptData("402 Recipient not found"))
             else:
                 self.client.sendall(self.encryptData("200 OK"))
                 break
         return recipient
     
     def getSubject(self):
-        self.client.sendall(self.encryptData("xxx Send subject "))
+        self.client.sendall(self.encryptData("123 Send subject "))
         subject = self.getResponse()
         self.client.sendall(self.encryptData("200 OK"))
         return subject[9:]
 
     def getData(self):
-        self.client.sendall(self.encryptData("xxx Send data, ending with one blank line and END"))
+        self.client.sendall(self.encryptData("124 Send data, ending with one blank line and END"))
         data = self.getResponse()
         self.client.sendall(self.encryptData("200 OK"))
         return data[6:]
 
     def getNumberOfAttachments(self):
-        self.client.sendall(self.encryptData("xxx Send number of attachments"))
+        self.client.sendall(self.encryptData("125 Send number of attachments"))
         data = self.getResponse()
         self.client.sendall(self.encryptData("200 OK"))
         return data
@@ -103,7 +103,7 @@ class ServerMailing:
     def getAttachments(self, number, recipient):
         attachments = []
         for i in range(0, number):
-            self.client.sendall(self.encryptData("xxx Send attachment number {}".format(i)))
+            self.client.sendall(self.encryptData("126 Send attachment number {}".format(i)))
             response = self.getResponse()
             size = self.getAttachmentSize(response)
             filename = self.getAttachmentName(response)
@@ -167,11 +167,4 @@ class ServerMailing:
 
         self.sendMail(sender, recipient, subject, data, attachments)
 
-
-        
-
-
-
-
-
-        
+        self.client.sendall(self.encryptData("220 Email was sent"))

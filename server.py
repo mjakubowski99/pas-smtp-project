@@ -80,29 +80,46 @@ def server(client):
 
             cipher = Encryption.SymetricEncrypt(message)
 
-            client.sendall(encryptData(cipher, "100 Hello supported_protocols usmtp supported_versions 1.0"))
+            client.sendall(encryptData(cipher, "100 Hello supported_protocols usmtp supported_versions 1.0\nInput LOGIN if you want login\nInput SEND MAIL if you want send mail\nInput BYE if you want close connection."))
 
             response = getResponse(client)
             response = decryptData(cipher, response)
 
             if not "1.0" in response:
-                client.sendall(encryptData(cipher, "503 Unsupported version of protocol"))
+                client.sendall(encryptData(cipher, "501 Unsupported version of protocol"))
                 client.close()
 
-            #Authentication system
-            authenticationServer = ServerAuthentication.ServerAuthentication(client, cipher)
-            authentication = authenticationServer.communication()
-            if not authentication:
-                print("Connection close: ") # Wpis do logów
-                client.close()
-
-            #Mailing system
-            mailingServer = ServerMailing.ServerMailing(client, cipher)
-            mailingServer = mailingServer.communication()
+            authentication = ""
+            while True:
+                option = getResponse(client)
+                option = decryptData(cipher, option)  
+                print(option)  
+                
+                if option == "LOGIN":
+                    #Authentication system
+                    if authentication:
+                        client.sendall(encryptData(cipher, "130 You are currently logged in"))
+                        continue
+                    authenticationServer = ServerAuthentication.ServerAuthentication(client, cipher)
+                    authentication = authenticationServer.communication()
+                    if not authentication:
+                        print("Connection close: ") # Wpis do logów
+                        client.close()
+                elif option == "SEND MAIL":
+                    #Mailing system
+                    if not authentication:
+                        client.sendall(encryptData(cipher, "520 Unauthorized attempt"))
+                        client.close()
+                    mailingServer = ServerMailing.ServerMailing(client, cipher)
+                    mailingServer = mailingServer.communication()
+                elif option == "BYE":
+                    client.close()
+                else:
+                    client.sendall(encryptData(cipher, "300 Not recognized command"))
             
         else:
             print("Bad ssl") # Wpis do logów
-            print("Connection close: ", addr[0]) # Wpis do logów
+            #print("Connection close: ", addr[0]) # Wpis do logów
             client.close()
     except socket.error:
         client.close()

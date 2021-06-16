@@ -58,7 +58,7 @@ class ClientSsl:
         self.key = os.urandom(32)
     
     def codeValid(self, data):
-        return data.decode('utf-8').startswith('200 ')
+        return data.decode('utf-8').startswith('203 ')
 
     def getEncryptedSymetricKey(self):
         toEncrypt = self.key

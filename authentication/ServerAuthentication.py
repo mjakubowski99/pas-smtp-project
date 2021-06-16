@@ -49,7 +49,7 @@ class ServerAuthentication:
         while not authentication:
             counter += 1
             if(counter >= 6):
-                self.client.sendall(self.encryptData("501 Multiple wrong login or password. Try again later.")) #Wpis do logów
+                self.client.sendall(self.encryptData("510 Multiple wrong login or password. Try again later.")) #Wpis do logów
                 return False
             self.client.sendall(self.encryptData("111 Send your e-mail adress"))
 
@@ -57,7 +57,6 @@ class ServerAuthentication:
             email = response
             
             while not self.checkEmail(email):
-                print("petla")
                 counter += 1
                 self.client.sendall(self.encryptData("301 Wrong e-mail syntax"))
                 response = self.getResponse()
@@ -81,6 +80,6 @@ class ServerAuthentication:
                 break
 
         if authentication:
-            self.client.sendall(self.encryptData("200 Authentication successful"))
+            self.client.sendall(self.encryptData("210 Authentication successful"))
             print("Authentication successful") #Wpis do logów
             return True

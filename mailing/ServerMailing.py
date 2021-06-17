@@ -52,6 +52,7 @@ class ServerMailing:
             recipient = recipient[9:]
             if not self.checkEmail(recipient):
                 self.client.sendall(self.encryptData("301 Wrong e-mail syntax"))
+                
             elif not self.mailInDatabase(recipient):
                 self.client.sendall(self.encryptData("402 Recipient not found"))
             else:
@@ -143,6 +144,11 @@ class ServerMailing:
         for i in attachments:
             self.db.insert("INSERT INTO message_attachments (id, message_id, attachment_path, created_at, updated_at) VALUES (0, %s, %s, null, null)", (messageID, i,) )
 
+    def saveLogs(self, message):
+        logs = open("ServerLogs.txt", "a+")
+        message += '\n'
+        logs.write(message)
+        logs.close()
 
     def communication(self):
         sender = self.getSender()
@@ -168,3 +174,4 @@ class ServerMailing:
         self.sendMail(sender, recipient, subject, data, attachments)
 
         self.client.sendall(self.encryptData("220 Email was sent"))
+        self.saveLogs(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " Email from "+ sender + " to " + recipient + " was sent " + self.client.getpeername()[0])

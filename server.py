@@ -6,9 +6,10 @@ import re
 from database.DB import DB
 import authentication.ServerAuthentication as ServerAuthentication
 import mailing.ServerMailing as ServerMailing
+import datetime
 
 regex = '^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$'
-
+logs = open("ServerLogs.txt", "a+")
 db = DB()
 
 def mailInDatabase(mail):
@@ -73,6 +74,7 @@ def receiveMail(client, cipher):
     return True
 
 def server(client):
+    clientIP = client.getpeername()[0]
     try:
         server = ServerSsl.ServerSsl()
         if server.sslCommunication(client): #key and vector to decryption and encryption
@@ -87,6 +89,7 @@ def server(client):
 
             if not "1.0" in response:
                 client.sendall(encryptData(cipher, "501 Unsupported version of protocol"))
+                saveLogs(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " Unsupported version of protocol. Connection closed. " + clientIP)
                 client.close()
 
             authentication = ""
@@ -99,38 +102,51 @@ def server(client):
                     #Authentication system
                     if authentication:
                         client.sendall(encryptData(cipher, "130 You are currently logged in"))
+                        saveLogs(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " Login attempt with active session " + clientIP)
                         continue
                     authenticationServer = ServerAuthentication.ServerAuthentication(client, cipher)
                     authentication = authenticationServer.communication()
                     if not authentication:
                         print("Connection close: ") # Wpis do logów
+                        saveLogs(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " Authentication failed " + clientIP)
+                        saveLogs(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " Connection close: " + clientIP)
                         client.close()
                 elif option == "SEND MAIL":
                     #Mailing system
                     if not authentication:
                         client.sendall(encryptData(cipher, "520 Unauthorized attempt"))
+                        saveLogs(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " Unauthorized attempt to send mail " + clientIP)
+                        saveLogs(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " Connection close: " + clientIP)
                         client.close()
                     mailingServer = ServerMailing.ServerMailing(client, cipher)
                     mailingServer = mailingServer.communication()
                 elif option == "BYE":
+                    saveLogs(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " Connection close: " + clientIP)
                     client.close()
                 else:
                     client.sendall(encryptData(cipher, "300 Not recognized command"))
             
         else:
             print("Bad ssl") # Wpis do logów
-            #print("Connection close: ", addr[0]) # Wpis do logów
+            saveLogs(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " Bad SSLCommunication - Connection close: " + clientIP)
             client.close()
     except socket.error:
+        saveLogs(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " Connection close: ") #+ client.getpeername()[0])
         client.close()
     
-    
+
+def saveLogs(message):
+    logs = open("ServerLogs.txt", "a+")
+    message += '\n'
+    logs.write(message)
+    logs.close()
     
 def listen(s):
+    
     while True:
         client, addr = s.accept()
-        print("Connected: ", addr[0]) # Wpis do logów
-
+        #print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "Connected client: " + addr[0]) # Wpis do logów
+        saveLogs(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " Connected client: " + addr[0])
         task = threading.Thread(target=server, kwargs={'client': client} )
         task.start()
     

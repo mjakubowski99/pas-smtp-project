@@ -82,7 +82,7 @@ def server(client):
 
             cipher = Encryption.SymetricEncrypt(message)
 
-            client.sendall(encryptData(cipher, "100 Hello supported_protocols usmtp supported_versions 1.0\nInput LOGIN if you want login\nInput SEND MAIL if you want send mail\nInput BYE if you want close connection."))
+            client.sendall(encryptData(cipher, "100 Hello supported_protocols usmtp supported_versions 1.0"))
 
             response = getResponse(client)
             response = decryptData(cipher, response)
@@ -102,42 +102,43 @@ def server(client):
                     #Authentication system
                     if authentication:
                         client.sendall(encryptData(cipher, "130 You are currently logged in"))
-                        saveLogs(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " Login attempt with active session " + clientIP)
+                        saveLogs(" Login attempt with active session " + clientIP)
                         continue
                     authenticationServer = ServerAuthentication.ServerAuthentication(client, cipher)
                     authentication = authenticationServer.communication()
                     if not authentication:
-                        print("Connection close: ") # Wpis do logów
-                        saveLogs(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " Authentication failed " + clientIP)
-                        saveLogs(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " Connection close: " + clientIP)
+                        print("Connection close")
+                        saveLogs(" Authentication failed " + clientIP)
+                        saveLogs(" Connection close: " + clientIP)
                         client.close()
                 elif option == "SEND MAIL":
                     #Mailing system
                     if not authentication:
                         client.sendall(encryptData(cipher, "520 Unauthorized attempt"))
-                        saveLogs(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " Unauthorized attempt to send mail " + clientIP)
-                        saveLogs(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " Connection close: " + clientIP)
+                        saveLogs(" Unauthorized attempt to send mail " + clientIP)
+                        saveLogs(" Connection close: " + clientIP)
                         client.close()
                     mailingServer = ServerMailing.ServerMailing(client, cipher)
                     mailingServer = mailingServer.communication()
                 elif option == "BYE":
-                    saveLogs(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " Connection close: " + clientIP)
+                    saveLogs(" Connection close: " + clientIP)
                     client.close()
                 else:
                     client.sendall(encryptData(cipher, "300 Not recognized command"))
             
         else:
             print("Bad ssl") # Wpis do logów
-            saveLogs(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " Bad SSLCommunication - Connection close: " + clientIP)
+            saveLogs("Bad SSLCommunication - Connection close: " + clientIP)
             client.close()
     except socket.error:
-        saveLogs(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " Connection close: ") #+ client.getpeername()[0])
+        saveLogs(" Connection close") #+ client.getpeername()[0])
         client.close()
     
 
 def saveLogs(message):
+    time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     logs = open("ServerLogs.txt", "a+")
-    message += '\n'
+    message = time + message + '\n'
     logs.write(message)
     logs.close()
     
@@ -145,8 +146,7 @@ def listen(s):
     
     while True:
         client, addr = s.accept()
-        #print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "Connected client: " + addr[0]) # Wpis do logów
-        saveLogs(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " Connected client: " + addr[0])
+        saveLogs(" Connected client: " + addr[0])
         task = threading.Thread(target=server, kwargs={'client': client} )
         task.start()
     

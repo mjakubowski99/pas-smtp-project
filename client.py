@@ -5,6 +5,22 @@ import ssl.encryption.SymetricEncryption as Encryption
 import sys
 import mailing.ClientMailing as ClientMailing
 
+supported_protocols = [ 'usmtp' ]
+supported_versions = [ '1.0' ]
+
+def checkProtocol(data):
+    helloMsg = data.split(' ') #split data with space
+    if( len(helloMsg) != 6 ):
+        print("Server send message with bad format")
+
+    if( not ( helloMsg[0] == '100' and helloMsg[1] == 'Hello' and 
+              helloMsg[2] == 'supported_protocols' and helloMsg[3] in supported_protocols and 
+              helloMsg[4] == 'supported_versions' and helloMsg[5] in supported_versions )
+    ):
+        return False
+    return True
+
+
 
 def encryptData(encryptor, message):
     encryptedData = encryptor.encrypt(message)
@@ -52,14 +68,24 @@ try:
         while not b"\r\n\r\n" in response:
             response += s.recv(1024)
         
-        print(decryptData(cipher, response))
+        data = decryptData(cipher, response)
+        
+        if not checkProtocol(data):
+            print("This protocol or version is not supported")
+            s.close()
+            sys.exit(0)
+
+        print("Server support my usmtp 1.0 version")
+
 
         s.sendall(encryptData(cipher, "1.0 Hello"))
 
-        authentication = False
+
         email = ""
+        authentication = False
+
         while True:
-            message = input("Choose operations:\n")
+            message = input("Input action phrase.\nYou can do actions: LOGIN, SEND MAIL, BYE\n")
             s.sendall(encryptData(cipher, message))
 
             if message == "LOGIN":
@@ -119,52 +145,5 @@ try:
                 response = decryptData(cipher, response)
                 print(response[4:])
 
-        #Authentication
-        authentication = False
-        while not authentication:
-            response = getResponse(s)
-            response = decryptData(cipher, response)
-            print(response[4:])
-            if "510" in response:
-                s.close()
-                sys.exit(0)
-
-            email = input()
-
-            s.sendall(encryptData(cipher, email))
-
-            response = getResponse(s)
-            response = decryptData(cipher, response)
-            print(response[4:])
-            if "510" in response:
-                s.close()
-                sys.exit(0)
-            
-
-            while "301" in response:
-                email = input()
-                s.sendall(encryptData(cipher, email))
-                response = getResponse(s)
-                response = decryptData(cipher, response)
-                print(response[4:])
-                if "510" in response:
-                    s.close()
-                    sys.exit(0)
-
-            password = input()
-
-            s.sendall(encryptData(cipher, password))
-            response = getResponse(s)
-            response = decryptData(cipher, response)
-            print(response[4:])
-            if "210" in response:
-                authentication = True
-                #sendMail(s, cipher, email, "mail from: ")
-                #sendMessage(email, "mail from: ")
-            elif "510" in response:
-                sys.exit(0)
-        clientMailing = ClientMailing.ClientMailing(s, cipher, email)
-        clientMailing = clientMailing.communication()
-        s.close()
 except socket.error:
     print("500 Cannot connect to server")

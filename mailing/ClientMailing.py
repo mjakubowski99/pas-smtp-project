@@ -86,27 +86,36 @@ class ClientMailing:
         number = input()
         self.s.sendall( self.encryptData(number) )
         response = self.getResponse()
+        if( not response.startswith("200 ") ):
+            print(response)
+            self.s.close()
+            sys.exit(0)
+
         print(response[4:])
 
-        for i in range(0, int(number)):
-            response = self.getResponse()
-            print(response[4:])
-            while True:
-                filename = input("Input filename:\n")
-                if os.path.isfile(filename):
-                    break
-                else:
-                    print("File " + filename + " not found.\n")
+        try:
+            number = int(number)
+            for i in range(0, number):
+                response = self.getResponse()
+                print(response[4:])
+                while True:
+                    filename = input("Input filename:\n")
+                    if os.path.isfile(filename):
+                        break
+                    else:
+                        print("File " + filename + " not found.\n")
 
-            file = open(filename, "rb")
-            data = file.read()
-            print(data)
-            data = self.encryptFile(data)
-            message = "Content-Length: "+ str(len(data)) + "\r\n" + "Filename: " + filename
-            self.s.sendall( self.encryptData(message) )
-            response = self.getResponse()
-            print(response[4:])
-            self.s.sendall( data )
+                file = open(filename, "rb")
+                data = file.read()
+                data = self.encryptFile(data)
+                message = "Content-Length: "+ str(len(data)) + "\r\n" + "Filename: " + filename
+                self.s.sendall( self.encryptData(message) )
+                response = self.getResponse()
+                print(response[4:])
+                self.s.sendall( data )
+        except ValueError:
+            self.s.close()
+            sys.exit(0)
 
 
 

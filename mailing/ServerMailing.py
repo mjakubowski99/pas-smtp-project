@@ -75,8 +75,13 @@ class ServerMailing:
     def getNumberOfAttachments(self):
         self.client.sendall(self.encryptData("125 Send number of attachments"))
         data = self.getResponse()
-        self.client.sendall(self.encryptData("200 OK"))
-        return data
+        try:
+            data = int(data)
+            self.client.sendall(self.encryptData("200 OK"))
+            return data
+        except ValueError as err:
+            self.client.sendall( self.encryptData("444 bad attachment number") )
+            return False
 
     def getAttachmentSize(self, response):
         data = response.split('\r\n')
@@ -164,9 +169,12 @@ class ServerMailing:
         print ("Data = " + data)
 
         numberOfAttachments = self.getNumberOfAttachments()
-        print ("Number of attachments: " + numberOfAttachments)
+        if( numberOfAttachments == False ):
+            return
 
-        attachments = self.getAttachments(int(numberOfAttachments), recipient)
+        print ("Number of attachments: " + str(numberOfAttachments) )
+
+        attachments = self.getAttachments(numberOfAttachments, recipient)
         print("Attachments:")
         for i in attachments:
             print(i)

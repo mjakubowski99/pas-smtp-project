@@ -80,7 +80,7 @@ class ServerMailing:
             self.client.sendall(self.encryptData("200 OK"))
             return data
         except ValueError as err:
-            self.client.sendall( self.encryptData("444 bad attachment number") )
+            self.client.sendall( self.encryptData("521 bad attachment number") )
             return False
 
     def getAttachmentSize(self, response):

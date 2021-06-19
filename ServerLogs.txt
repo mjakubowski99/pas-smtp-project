@@ -358,3 +358,60 @@
 2021-06-19 14:29:03 Connected client: 127.0.0.1
 2021-06-19 14:29:03 ssl communication done with success
 2021-06-19 14:29:12 Authentication successful 127.0.0.1
+2021-06-19 15:36:01 Connected client: 127.0.0.1
+2021-06-19 15:36:01 ssl communication done with success
+2021-06-19 15:36:20 Wrong password 127.0.0.1
+2021-06-19 15:37:32 Authentication successful 127.0.0.1
+2021-06-19 15:38:44 Connected client: 127.0.0.1
+2021-06-19 15:38:44 ssl communication done with success
+2021-06-19 15:38:53 Authentication successful 127.0.0.1
+2021-06-19 15:39:10 Email from testprotokolu1@wp.pl to testprotokolu2@wp.pl was sent 127.0.0.1
+2021-06-19 15:39:12 Connection close: 127.0.0.1
+2021-06-19 15:39:12 Connection close
+2021-06-19 15:56:58 Connected client: 127.0.0.1
+2021-06-19 15:56:58 ssl communication done with success
+2021-06-19 15:57:11 Connected client: 127.0.0.1
+2021-06-19 15:57:11 ssl communication done with success
+2021-06-19 15:57:39 Authentication successful 127.0.0.1
+2021-06-19 15:57:51 Authentication successful 127.0.0.1
+2021-06-19 15:58:36 Email from testprotokolu2@wp.pl to testprotokolu2@wp.pl was sent 127.0.0.1
+2021-06-19 15:58:40 Email from testprotokolu1@wp.pl to testprotokolu3@wp.pl was sent 127.0.0.1
+2021-06-19 15:58:45 Login attempt with active session 127.0.0.1
+2021-06-19 15:58:50 Login attempt with active session 127.0.0.1
+2021-06-19 15:58:58 Connected client: 127.0.0.1
+2021-06-19 15:58:58 ssl communication done with success
+2021-06-19 15:59:01 Connected client: 127.0.0.1
+2021-06-19 15:59:01 ssl communication done with success
+2021-06-19 15:59:07 Connected client: 127.0.0.1
+2021-06-19 15:59:07 ssl communication done with success
+2021-06-19 15:59:10 Connected client: 127.0.0.1
+2021-06-19 15:59:10 ssl communication done with success
+2021-06-19 15:59:15 Login attempt with active session 127.0.0.1
+2021-06-19 15:59:17 Connection close: 127.0.0.1
+2021-06-19 15:59:17 Connection close
+2021-06-19 16:00:11 Connected client: 127.0.0.1
+2021-06-19 16:00:11 ssl communication done with success
+2021-06-19 16:00:15 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 16:00:16 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 16:00:17 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 16:00:17 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 16:00:17 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 16:00:18 Multiple wrong login or password 127.0.0.1
+2021-06-19 16:00:18 Authentication failed 127.0.0.1
+2021-06-19 16:00:18 Connection close: 127.0.0.1
+2021-06-19 16:00:18 Connection close
+2021-06-19 16:00:20 Connected client: 127.0.0.1
+2021-06-19 16:00:21 ssl communication done with success
+2021-06-19 16:00:27 Wrong password 127.0.0.1
+2021-06-19 16:00:31 Wrong password 127.0.0.1
+2021-06-19 16:00:32 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 16:00:36 Wrong password 127.0.0.1
+2021-06-19 16:00:45 Authentication successful 127.0.0.1
+2021-06-19 16:01:37 Connection close: 127.0.0.1
+2021-06-19 16:01:37 Connection close
+2021-06-19 16:15:00 Connected client: 127.0.0.1
+2021-06-19 16:15:01 ssl communication done with success
+2021-06-19 16:15:09 Authentication successful 127.0.0.1
+2021-06-19 16:15:29 Email from testprotokolu1@wp.pl to testprotokolu5@wp.pl was sent 127.0.0.1
+2021-06-19 16:15:31 Connection close: 127.0.0.1
+2021-06-19 16:15:31 Connection close

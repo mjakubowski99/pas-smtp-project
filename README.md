@@ -1,6 +1,9 @@
 # pas-smtp-project
 Mail server created according to own SMTP protocol creation
 
+Authors:  
+Mateusz Kopczan, Michał Jakubowski
+
 
 Install required python packages:  
 ```
@@ -22,7 +25,7 @@ py database/InitDB.py
 ```
 This will create database called usmtp 
 
-Last step is running:
+Last step is running: (Remember to have running database)
 
 ```
 py server.py
@@ -33,4 +36,14 @@ py client.py
 ```
 To init server and client communication
 
-Ssl certificates explanation
+# Ssl certificates managing:
+
+You can run:
+```
+py certManager.py
+```
+In this script you have 3 posibilities.   
+You can create your self signed certificate.  
+You can gen certificate request and you can sign certificate request.
+
+

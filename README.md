@@ -66,7 +66,7 @@ Signed certificate files can be founded there --> ssl/certs
 Private rsa keys can be found here --> ssl/keys  
 Public rsa keys can be found here --> ssl/clientKeys  
 
-Some more comments to implementation are describied in documentation
+Some more comments to implementation are describied in documentation in folder doc/USTMP.pdf
 
 
 

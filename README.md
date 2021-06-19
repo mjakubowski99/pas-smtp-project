@@ -1,6 +1,9 @@
 # pas-smtp-project
 Mail server created according to own SMTP protocol creation
 
+Authors:  
+Mateusz Kopczan, Michał Jakubowski
+
 
 Install required python packages:  
 ```

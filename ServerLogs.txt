@@ -409,3 +409,9 @@
 2021-06-19 16:00:45 Authentication successful 127.0.0.1
 2021-06-19 16:01:37 Connection close: 127.0.0.1
 2021-06-19 16:01:37 Connection close
+2021-06-19 16:15:00 Connected client: 127.0.0.1
+2021-06-19 16:15:01 ssl communication done with success
+2021-06-19 16:15:09 Authentication successful 127.0.0.1
+2021-06-19 16:15:29 Email from testprotokolu1@wp.pl to testprotokolu5@wp.pl was sent 127.0.0.1
+2021-06-19 16:15:31 Connection close: 127.0.0.1
+2021-06-19 16:15:31 Connection close

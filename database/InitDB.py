@@ -47,6 +47,13 @@ db.insert("""INSERT INTO users (id, name, email, email_verified_at, password, re
                     (4, "Test1", "testprotokolu5@wp.pl", null, %s, null, null, null)""", (password,))
 db.insert("""INSERT INTO users (id, name, email, email_verified_at, password, remember_token, created_at, updated_at) VALUES
                     (5, "Test1", "testprotokolu6@wp.pl", null, %s, null, null, null)""", (password,))
+
+print("List of users for testing: (password for all users: example123)")
+db.exec("SELECT email FROM users")
+for x in db.result:
+  print(x[0])
+
+
 #db.insert("Commit")
 #cursor.close()
 #db.close()

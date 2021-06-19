@@ -33,4 +33,14 @@ py client.py
 ```
 To init server and client communication
 
-Ssl certificates explanation
+# Ssl certificates managing:
+
+You can run:
+```
+py certManager.py
+```
+In this script you have 3 posibilities.   
+You can create your self signed certificate.  
+You can gen certificate request and you can sign certificate request.
+
+

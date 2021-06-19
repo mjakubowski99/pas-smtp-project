@@ -57,6 +57,7 @@ In this script you have 3 posibilities which you can choose with input commands 
       ```
         SIGN_CERT
       ```  
+      
 After choosing options you must follow program instructions and provide required data.  
 Remember to provide filenames which not exists, because script protect files from overwriting.  
 

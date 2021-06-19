@@ -24,6 +24,11 @@ class ClientMailing:
         encryptedData += b"\r\n\r\n"
         return encryptedData
 
+    def encryptMessageBody(self, message):
+        encryptedData = self.cipher.encrypt(message)
+        encryptedData += b".\r\n\r\n"
+        return encryptedData
+
     def decryptData(self, message):
         decryptedData = self.cipher.decrypt(message)
         return decryptedData
@@ -63,7 +68,7 @@ class ClientMailing:
         response = self.getResponse()
         print(response[4:])
         data = self.inputData()
-        self.s.sendall( self.encryptData(self.prepareMessage(data, "data: ") ) )
+        self.s.sendall( self.encryptMessageBody(self.prepareMessage(data, "data: ") ) )
         response = self.getResponse()
         print(response[4:])
 

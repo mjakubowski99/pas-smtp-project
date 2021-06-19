@@ -17,6 +17,12 @@ class ServerMailing:
             response += self.client.recv(1)
         return self.decryptData(response[:-4])
 
+    def getMessageResponse(self):
+        response = b""
+        while not b".\r\n\r\n" in response:
+            response += self.client.recv(1)
+        return self.decryptData(response[:-5])
+
     def encryptData(self, message):
         encryptedData = self.cipher.encrypt(message)
         encryptedData += b"\r\n\r\n"
@@ -68,7 +74,7 @@ class ServerMailing:
 
     def getData(self):
         self.client.sendall(self.encryptData("124 Send data, ending with one blank line and END"))
-        data = self.getResponse()
+        data = self.getMessageResponse()
         self.client.sendall(self.encryptData("200 OK"))
         return data[6:]
 
@@ -77,11 +83,13 @@ class ServerMailing:
         data = self.getResponse()
         try:
             data = int(data)
+            if data < 0:
+                raise ValueError
             self.client.sendall(self.encryptData("200 OK"))
             return data
         except ValueError as err:
             self.client.sendall( self.encryptData("521 bad attachment number") )
-            return False
+            return -1
 
     def getAttachmentSize(self, response):
         data = response.split('\r\n')
@@ -143,16 +151,23 @@ class ServerMailing:
         recipientID = self.getUserId(recipient)
         recipientID = int(recipientID[0])
         
-
-        messageID = self.db.insert("INSERT INTO messages (id, sender_id, receiver_id, subject, message, created_at, updated_at) VALUES (0, %s, %s, %s, %s, null, null)", (senderID, recipientID, subject, data,) ) 
+        now = datetime.datetime.now()
+        messageID = self.db.insert(
+            """INSERT INTO messages (id, sender_id, receiver_id, subject, message, created_at, updated_at) 
+             VALUES (0, %s, %s, %s, %s, %s, %s)""", (senderID, recipientID, subject, data, now, now) 
+        )
         
         for i in attachments:
-            self.db.insert("INSERT INTO message_attachments (id, message_id, attachment_path, created_at, updated_at) VALUES (0, %s, %s, null, null)", (messageID, i,) )
+            self.db.insert(
+                """INSERT INTO message_attachments (id, message_id, attachment_path, created_at, updated_at) 
+                 VALUES (0, %s, %s, %s, %s)""", (messageID, i, now, now) 
+            )
 
     def saveLogs(self, message):
+        now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") 
         logs = open("ServerLogs.txt", "a+")
         message += '\n'
-        logs.write(message)
+        logs.write(now+message)
         logs.close()
 
     def communication(self):
@@ -169,7 +184,7 @@ class ServerMailing:
         print ("Data = " + data)
 
         numberOfAttachments = self.getNumberOfAttachments()
-        if( numberOfAttachments == False ):
+        if( numberOfAttachments == -1 ):
             return
 
         print ("Number of attachments: " + str(numberOfAttachments) )
@@ -182,4 +197,4 @@ class ServerMailing:
         self.sendMail(sender, recipient, subject, data, attachments)
 
         self.client.sendall(self.encryptData("220 Email was sent"))
-        self.saveLogs(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " Email from "+ sender + " to " + recipient + " was sent " + self.client.getpeername()[0])
+        self.saveLogs(" Email from "+ sender + " to " + recipient + " was sent " + self.client.getpeername()[0])

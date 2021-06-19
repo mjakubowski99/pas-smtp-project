@@ -53,17 +53,6 @@ CREATE TABLE `message_attachments` (
 
 -- --------------------------------------------------------
 
---
--- Struktura tabeli dla tabeli `password_resets`
---
-
-CREATE TABLE `password_resets` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
 
 --
 -- Struktura tabeli dla tabeli `users`
@@ -98,12 +87,6 @@ ALTER TABLE `messages`
 ALTER TABLE `message_attachments`
   ADD PRIMARY KEY (`id`),
   ADD KEY `message_attachments_message_id_foreign` (`message_id`);
-
---
--- Indeksy dla tabeli `password_resets`
---
-ALTER TABLE `password_resets`
-  ADD KEY `password_resets_email_index` (`email`);
 
 --
 -- Indeksy dla tabeli `users`

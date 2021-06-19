@@ -78,6 +78,7 @@ def server(client):
     try:
         server = ServerSsl.ServerSsl()
         if server.sslCommunication(client): #key and vector to decryption and encryption
+            saveLogs(" ssl communication done with success")
             message = server.clientKey
 
             cipher = Encryption.SymetricEncrypt(message)
@@ -161,10 +162,10 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind(('127.0.0.1', 1338))
 s.listen(5)
 
-task = threading.Thread(target=listen, kwargs={'s': s6} )
+task = threading.Thread(target=listen, kwargs={'s': s6} ) #ipv6 thread
 task.start()
 
-task = threading.Thread(target=listen, kwargs={'s': s} )
+task = threading.Thread(target=listen, kwargs={'s': s} ) #ipv4 thread
 task.start()
 
 

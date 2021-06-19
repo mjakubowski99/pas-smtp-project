@@ -32,3 +32,5 @@ And
 py client.py
 ```
 To init server and client communication
+
+Ssl certificates explanation

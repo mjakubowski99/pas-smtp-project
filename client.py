@@ -120,7 +120,7 @@ try:
                         response = getResponse(s)
                         response = decryptData(cipher, response)
                         print(response[4:])
-                        if "510" in response:
+                        if "510" in response or "501" in response:
                             s.close()
                             sys.exit(0)
 

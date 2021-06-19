@@ -45,9 +45,10 @@ class ServerAuthentication:
         return False
 
     def saveLogs(self, message):
+        now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         logs = open("ServerLogs.txt", "a+")
         message += '\n'
-        logs.write(message)
+        logs.write(now+message)
         logs.close()
 
     def communication(self):
@@ -57,7 +58,7 @@ class ServerAuthentication:
             counter += 1
             if(counter >= 6):
                 self.client.sendall(self.encryptData("510 Multiple wrong login or password. Try again later.")) #Wpis do logów
-                self.saveLogs(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " Multiple wrong login or password " + self.client.getpeername()[0])
+                self.saveLogs(" Multiple wrong login or password " + self.client.getpeername()[0])
                 return False
             self.client.sendall(self.encryptData("111 Send your e-mail adress"))
 
@@ -67,12 +68,12 @@ class ServerAuthentication:
             while not self.checkEmail(email):
                 counter += 1
                 self.client.sendall(self.encryptData("301 Wrong e-mail syntax"))
-                self.saveLogs(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " Input e-mail with wrong syntax " + self.client.getpeername()[0])
+                self.saveLogs(" Input e-mail with wrong syntax " + self.client.getpeername()[0])
                 response = self.getResponse()
                 email = response
                 if(counter >= 6):
                     self.client.sendall(self.encryptData("501 Multiple wrong login or password. Try again later.")) #Wpis do logów
-                    self.saveLogs(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " Multiple wrong login or password " + self.client.getpeername()[0])
+                    self.saveLogs(" Multiple wrong login or password " + self.client.getpeername()[0])
                     return False
 
             self.client.sendall(self.encryptData("112 Send your password"))
@@ -86,12 +87,12 @@ class ServerAuthentication:
 
             if not authentication:
                 self.client.sendall(self.encryptData("401 Wrong password")) #Wpis do logów
-                self.saveLogs(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " Wrong password " + self.client.getpeername()[0])
+                self.saveLogs(" Wrong password " + self.client.getpeername()[0])
             else:
                 break
 
         if authentication:
             self.client.sendall(self.encryptData("210 Authentication successful"))
-            self.saveLogs(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " Authentication successful " + self.client.getpeername()[0])
+            self.saveLogs(" Authentication successful " + self.client.getpeername()[0])
             print("Authentication successful") #Wpis do logów
             return True

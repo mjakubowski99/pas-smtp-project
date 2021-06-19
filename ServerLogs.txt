@@ -134,3 +134,227 @@
 2021-06-18 23:10:14 Authentication successful 127.0.0.1
 2021-06-18 23:10:55 Email from jan.kowalski@wp.pl to jan.kowalski@wp.pl was sent 127.0.0.1
 2021-06-18 23:11:57 Email from jan.kowalski@wp.pl to jan.kowalski@wp.pl was sent 127.0.0.1
+2021-06-19 10:50:37 Connected client: 127.0.0.1
+2021-06-19 10:50:49 Authentication successful 127.0.0.1
+2021-06-19 10:51:05 Connection close
+2021-06-19 10:51:32 Connected client: 127.0.0.1
+2021-06-19 10:51:43 Authentication successful 127.0.0.1
+2021-06-19 11:00:21 Connected client: 127.0.0.1
+2021-06-19 11:00:24 Connected client: 127.0.0.1
+2021-06-19 11:00:35 Unauthorized attempt to send mail 127.0.0.1
+2021-06-19 11:00:35 Connection close: 127.0.0.1
+2021-06-19 11:00:35 Connection close
+2021-06-19 11:00:50 Connected client: 127.0.0.1
+2021-06-19 11:01:08 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:01:13 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:01:27 Wrong password 127.0.0.1
+2021-06-19 11:01:40 Wrong password 127.0.0.1
+2021-06-19 11:03:47 Authentication successful 127.0.0.1
+2021-06-19 11:04:46 Connection close
+2021-06-19 11:04:53 Connected client: 127.0.0.1
+2021-06-19 11:05:03 Authentication successful 127.0.0.1
+2021-06-19 11:05:59 Connected client: 127.0.0.1
+2021-06-19 11:06:30 Authentication successful 127.0.0.1
+2021-06-19 11:09:43 Connected client: 127.0.0.1
+2021-06-19 11:09:49 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:09:49 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:10:32 Connection close
+2021-06-19 11:10:38 Connected client: 127.0.0.1
+2021-06-19 11:10:55 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:10:58 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:11:01 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:11:04 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:11:07 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:12:28 Connected client: 127.0.0.1
+2021-06-19 11:12:39 Connected client: 127.0.0.1
+2021-06-19 11:12:44 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:14:16 Authentication successful 127.0.0.1
+2021-06-19 11:14:41 Connected client: 127.0.0.1
+2021-06-19 11:15:04 Authentication successful 127.0.0.1
+2021-06-19 11:15:24 Email from jan.kowalski@wp.pl to jan.kowalski@wp.pl was sent 127.0.0.1
+2021-06-19 11:32:46 Email from jan.kowalski@wp.pl to jan.kowalski@wp.pl was sent 127.0.0.1
+2021-06-19 11:38:23 Authentication successful 127.0.0.1
+2021-06-19 11:38:26 Login attempt with active session 127.0.0.1
+2021-06-19 11:38:31 Login attempt with active session 127.0.0.1
+2021-06-19 11:38:36 Login attempt with active session 127.0.0.1
+2021-06-19 11:38:37 Login attempt with active session 127.0.0.1
+2021-06-19 11:38:38 Login attempt with active session 127.0.0.1
+2021-06-19 11:38:40 Login attempt with active session 127.0.0.1
+2021-06-19 11:38:42 Login attempt with active session 127.0.0.1
+2021-06-19 11:46:02 Connected client: 127.0.0.1
+2021-06-19 11:46:13 Authentication successful 127.0.0.1
+2021-06-19 11:49:31 Connected client: 127.0.0.1
+2021-06-19 11:49:36 Unauthorized attempt to send mail 127.0.0.1
+2021-06-19 11:49:36 Connection close: 127.0.0.1
+2021-06-19 11:49:36 Connection close
+2021-06-19 11:49:41 Connected client: 127.0.0.1
+2021-06-19 11:49:42 Connection close: 127.0.0.1
+2021-06-19 11:49:42 Connection close
+2021-06-19 11:50:34 Connected client: 127.0.0.1
+2021-06-19 11:50:37 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:50:37 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:50:47 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:50:59 Connected client: 127.0.0.1
+2021-06-19 11:51:05 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:51:05 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:51:06 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:51:06 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:51:06 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:51:06 Multiple wrong login or password 127.0.0.1
+2021-06-19 11:51:06 Authentication failed 127.0.0.1
+2021-06-19 11:51:06 Connection close: 127.0.0.1
+2021-06-19 11:51:06 Connection close
+2021-06-19 11:51:10 Connected client: 127.0.0.1
+2021-06-19 11:51:14 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:51:15 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:51:17 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:51:18 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:51:33 Connected client: 127.0.0.1
+2021-06-19 11:51:50 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:51:51 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:51:51 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:51:52 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:51:52 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:51:52 Multiple wrong login or password 127.0.0.1
+2021-06-19 11:51:52 Authentication failed 127.0.0.1
+2021-06-19 11:51:52 Connection close: 127.0.0.1
+2021-06-19 11:51:52 Connection close
+2021-06-19 11:51:58 Connected client: 127.0.0.1
+2021-06-19 11:52:02 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:52:03 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:52:09 Wrong password 127.0.0.1
+2021-06-19 11:52:15 Authentication successful 127.0.0.1
+2021-06-19 11:52:20 Login attempt with active session 127.0.0.1
+2021-06-19 11:52:39 Connected client: 127.0.0.1
+2021-06-19 11:52:50 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:52:52 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:52:53 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:52:55 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:52:56 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:52:57 Multiple wrong login or password 127.0.0.1
+2021-06-19 11:52:57 Authentication failed 127.0.0.1
+2021-06-19 11:52:57 Connection close: 127.0.0.1
+2021-06-19 11:52:57 Connection close
+2021-06-19 11:55:09 Connected client: 127.0.0.1
+2021-06-19 11:55:14 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:55:14 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:55:14 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:55:15 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:55:15 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:55:16 Multiple wrong login or password 127.0.0.1
+2021-06-19 11:55:16 Authentication failed 127.0.0.1
+2021-06-19 11:55:16 Connection close: 127.0.0.1
+2021-06-19 11:55:16 Connection close
+2021-06-19 11:56:35 Connected client: 127.0.0.1
+2021-06-19 11:56:48 Authentication successful 127.0.0.1
+2021-06-19 11:57:22 Email from jan.kowalski@wp.pl to jan.kowalski@wp.pl was sent 127.0.0.1
+2021-06-19 11:57:28 Connection close: 127.0.0.1
+2021-06-19 11:57:28 Connection close
+2021-06-19 11:57:30 Connected client: 127.0.0.1
+2021-06-19 11:57:33 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:57:34 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:57:34 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:57:34 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:57:34 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:57:34 Multiple wrong login or password 127.0.0.1
+2021-06-19 11:57:34 Authentication failed 127.0.0.1
+2021-06-19 11:57:34 Connection close: 127.0.0.1
+2021-06-19 11:57:34 Connection close
+2021-06-19 11:58:09 Connected client: 127.0.0.1
+2021-06-19 11:58:13 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:58:13 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:58:13 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:58:14 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:58:14 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 11:58:16 Multiple wrong login or password 127.0.0.1
+2021-06-19 11:58:16 Authentication failed 127.0.0.1
+2021-06-19 11:58:16 Connection close: 127.0.0.1
+2021-06-19 11:58:16 Connection close
+2021-06-19 12:00:02 Connected client: 127.0.0.1
+2021-06-19 12:00:07 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 12:00:07 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 12:00:08 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 12:00:08 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 12:00:09 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 12:00:10 Multiple wrong login or password 127.0.0.1
+2021-06-19 12:00:10 Authentication failed 127.0.0.1
+2021-06-19 12:00:10 Connection close: 127.0.0.1
+2021-06-19 12:00:10 Connection close
+2021-06-19 12:00:39 Connected client: 127.0.0.1
+2021-06-19 12:00:50 Authentication successful 127.0.0.1
+2021-06-19 12:01:18 Email from jan.kowalski@wp.pl to jan.kowalski@wp.pl was sent 127.0.0.1
+2021-06-19 12:01:21 Connection close: 127.0.0.1
+2021-06-19 12:01:21 Connection close
+2021-06-19 12:01:22 Connected client: 127.0.0.1
+2021-06-19 12:01:25 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 12:01:26 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 12:01:26 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 12:01:26 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 12:01:27 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 12:01:27 Multiple wrong login or password 127.0.0.1
+2021-06-19 12:01:27 Authentication failed 127.0.0.1
+2021-06-19 12:01:27 Connection close: 127.0.0.1
+2021-06-19 12:01:27 Connection close
+2021-06-19 12:02:43 Connected client: 127.0.0.1
+2021-06-19 12:02:52 Authentication successful 127.0.0.1
+2021-06-19 12:03:18 Email from jan.kowalski@wp.pl to jan.kowalski@wp.pl was sent 127.0.0.1
+2021-06-19 12:03:32 Connection close: 127.0.0.1
+2021-06-19 12:03:32 Connection close
+2021-06-19 12:03:36 Connected client: 127.0.0.1
+2021-06-19 12:03:42 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 12:03:42 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 12:03:42 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 12:03:43 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 12:03:43 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 12:03:43 Multiple wrong login or password 127.0.0.1
+2021-06-19 12:03:43 Authentication failed 127.0.0.1
+2021-06-19 12:03:43 Connection close: 127.0.0.1
+2021-06-19 12:03:43 Connection close
+2021-06-19 12:04:25 Connected client: 127.0.0.1
+2021-06-19 12:04:35 Authentication successful 127.0.0.1
+2021-06-19 12:04:37 Login attempt with active session 127.0.0.1
+2021-06-19 12:04:41 Login attempt with active session 127.0.0.1
+2021-06-19 12:04:42 Login attempt with active session 127.0.0.1
+2021-06-19 12:04:43 Login attempt with active session 127.0.0.1
+2021-06-19 12:04:45 Login attempt with active session 127.0.0.1
+2021-06-19 12:04:59 Email from jan.kowalski@wp.pl to jan.kowalski@wp.pl was sent 127.0.0.1
+2021-06-19 12:20:25 Connected client: 127.0.0.1
+2021-06-19 12:20:37 Authentication successful 127.0.0.1
+2021-06-19 12:20:40 Login attempt with active session 127.0.0.1
+2021-06-19 12:21:01 Email from jan.kowalski@wp.pl to jan.kowalski@wp.pl was sent 127.0.0.1
+2021-06-19 12:22:11 Connection close
+2021-06-19 12:25:03 Connected client: 127.0.0.1
+2021-06-19 12:25:11 Authentication successful 127.0.0.1
+2021-06-19 12:25:27 Email from jan.kowalski@wp.pl to jan.kowalski@wp.pl was sent 127.0.0.1
+2021-06-19 12:46:43 Connected client: 127.0.0.1
+2021-06-19 12:46:52 Authentication successful 127.0.0.1
+2021-06-19 12:47:07 Email from jan.kowalski@wp.pl to jan.kowalski@wp.pl was sent 127.0.0.1
+2021-06-19 12:47:14 Connection close
+2021-06-19 13:05:35 Connected client: 127.0.0.1
+2021-06-19 13:05:37 Connection close
+2021-06-19 13:39:09 Connected client: 127.0.0.1
+2021-06-19 13:39:19 Authentication successful 127.0.0.1
+2021-06-19 13:40:03 Connected client: 127.0.0.1
+2021-06-19 13:40:11 Authentication successful 127.0.0.1
+2021-06-19 13:42:52 Connected client: 127.0.0.1
+2021-06-19 13:46:12 Connected client: 127.0.0.1
+2021-06-19 13:46:29 Connected client: 127.0.0.1
+2021-06-19 13:46:36 Connected client: 127.0.0.1
+2021-06-19 13:46:49 Connected client: 127.0.0.1
+2021-06-19 13:46:57 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 14:19:48 Connected client: 127.0.0.1
+2021-06-19 14:20:10 Authentication successful 127.0.0.1
+2021-06-19 14:21:57 Email from jan.kowalski@wp.pl to jan.kowalski@wp.pl was sent 127.0.0.1
+2021-06-19 14:22:53 Connected client: 127.0.0.1
+2021-06-19 14:22:56 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 14:22:56 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 14:22:56 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 14:22:56 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 14:22:57 Input e-mail with wrong syntax 127.0.0.1
+2021-06-19 14:22:57 Multiple wrong login or password 127.0.0.1
+2021-06-19 14:22:57 Authentication failed 127.0.0.1
+2021-06-19 14:22:57 Connection close: 127.0.0.1
+2021-06-19 14:22:57 Connection close
+2021-06-19 14:29:03 Connected client: 127.0.0.1
+2021-06-19 14:29:03 ssl communication done with success
+2021-06-19 14:29:12 Authentication successful 127.0.0.1

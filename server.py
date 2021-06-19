@@ -41,12 +41,6 @@ def checkEmail(email):
     else:
         return False
 
-
-def authClient(email, password):
-    if email == "jan.kowalski@wp.pl" and password == "supersilnehaslo":
-        return True
-    return False
-
 def validHeader(response, header):
     return response.startswith(header)
 

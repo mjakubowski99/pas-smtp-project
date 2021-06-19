@@ -45,15 +45,15 @@ You can run:
 py certManager.py
 ```
 In this script you have 3 posibilities which you can choose with input commands shown below: 
-    1.You can create your self signed certificate with: 
+    1.You can create your self signed certificate with:   
       ```
         CREATE_CERT_REQ
       ```
-    2.You can gen certificate request with:
+    2.You can gen certificate request with:  
       ```
         GEN_ROOT_CERT
       ```
-    3.You can sign certificate request with:
+    3.You can sign certificate request with:  
       ```
         SIGN_CERT
       ```

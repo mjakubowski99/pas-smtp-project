@@ -1,3 +1,9 @@
+-------------------------------------------
+It's work file. Official schemas can be founded in doc/USMTP.pdf
+-------------------------------------------
+
+
+
 Poprawna komunikacja:
 
     Server: hello supported_protocols usmtp supported_versions 1.0\r\n 

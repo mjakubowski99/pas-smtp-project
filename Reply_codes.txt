@@ -1,3 +1,8 @@
+-------------------------------------------
+It's work file. Official codes can be founded in doc/USMTP.pdf
+-------------------------------------------
+
+
 List of protocol server return codes:
 - 1xy - Informations 
 - 2xy - Positive reply

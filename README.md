@@ -22,7 +22,7 @@ py database/InitDB.py
 ```
 This will create database called usmtp 
 
-Last step is running:
+Last step is running: (Remember to have running database)
 
 ```
 py server.py
